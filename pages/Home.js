@@ -12,9 +12,9 @@ class HomePage extends PageTemplate{
     }
 
 
-    mainHTML(){
+    async mainHTML(){
         return heroSection() + 
-                servicesSection() + 
+            await servicesSection() + 
                 contactsSection();
     }
 }
