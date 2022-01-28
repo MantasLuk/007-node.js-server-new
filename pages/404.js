@@ -1,7 +1,6 @@
 const PageTemplate = require("../lib/Page");
 
 
-
 class Page404 extends PageTemplate {
     
     mainHTML(){
@@ -22,3 +21,4 @@ class Page404 extends PageTemplate {
 }
 
 module.exports = Page404;
+
