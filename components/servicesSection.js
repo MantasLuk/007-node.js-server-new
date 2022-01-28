@@ -1,12 +1,24 @@
+const file = require("../lib/file");
 const folder = require("../lib/folder");
 
 async function  servicesSection() {
 
     //perskaitome kokie failai yra: /data/services
-    const files = await folder.read('data/services')
-    console.log(files);
-    //gauname sarasa paslaugu json failu
+    const fileList = await folder.read('data/services');
+    console.log(fileList);
+
+    //gauname sarasa paslaugu JSON failu
+    for (const fileName of fileList){
+        const fileContent = await file.read('data/services', fileName)
+        console.log(fileName);
+        console.log(fileContent);
+    }
+    
     //visus JSON failus issiparsinti, konvertuoji i JS objekta
+
+    
+
+
     // atfiltruoti tik validzias ir aktyvias paslaugas, t.y. ju objektus
     //su ciklu sukonstruoti galutini paslaugu HTML
     //ta HTML istatyti i reikiama vieta return stringe
@@ -23,19 +35,19 @@ async function  servicesSection() {
         </div>
         <div class="row services-list">
             <div class="service">
-                <i class="icon fa fa-globe"></i>
+                <i class="icon fa fa-plane"></i>
                 <h3 class="title">Paid Search and Social Management</h3>
                 <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
             </div>
             <div class="service">
                 <i class="icon fa fa-globe"></i>
-                <h3>Direct Response Content</h3>
-                <p>Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
+                <h3 class="title">Direct Response Content</h3>
+                <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
             </div>
             <div class="service">
-                <i class="icon fa fa-globe"></i>
-                <h3>CRO and Retention Optimizations</h3>
-                <p>Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
+                <i class="icon fa fa-bath"></i>
+                <h3 class="title">CRO and Retention Optimizations</h3>
+                <p class="description">Each time a digital asset is purchased or sold, Sequoir donates a percentage of the fees back</p>
             </div>
         </div>
     </section>`;
