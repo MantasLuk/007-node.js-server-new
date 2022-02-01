@@ -47,8 +47,6 @@ async function  servicesSection() {
 
     }
     
-
-
 //ta HTML istatyti i reikiama vieta return stringe
     return `<section class="container bg-gradient services">
         <div class="row">
