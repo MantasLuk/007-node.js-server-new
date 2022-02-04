@@ -28,7 +28,7 @@ class IsValid {
         if(text === ''){
             return 'Forgot to type email'
         }
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
+        if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(text)) {
             return 'wrong email'
         }
         return true;
