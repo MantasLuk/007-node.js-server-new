@@ -1,4 +1,5 @@
-const server = require('./lib/server.js');
+//const server = require('./lib/server.js');
+import { server } from './lib/server.js'
 
 const app = {};
 
@@ -19,4 +20,4 @@ app.init = () => {
 
 app.init();
 
-module.exports = app;
+export { app };

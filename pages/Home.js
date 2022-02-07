@@ -1,7 +1,7 @@
-const contactsSection = require("../components/contectsSection copy");
-const heroSection = require("../components/heroSection");
-const servicesSection = require("../components/servicesSection");
-const PageTemplate = require("../lib/Page")
+import { contactsSection } from "../components/contectsSection.js";
+import { heroSection } from "../components/heroSection.js";
+import { servicesSection } from "../components/servicesSection.js";
+import { PageTemplate } from "../lib/Page.js";
 
 
 
@@ -12,11 +12,9 @@ class HomePage extends PageTemplate{
     }
 
 
-    async mainHTML(){
-        return heroSection() + 
-            await servicesSection() + 
-                contactsSection();
+    async mainHTML() {
+        return heroSection() + await servicesSection() + contactsSection();
     }
 }
 
-module.exports = HomePage;
+export { HomePage };

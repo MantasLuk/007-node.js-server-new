@@ -1,6 +1,6 @@
-const file = require("../lib/file");
-const folder = require("../lib/folder");
-const utils = require("../lib/utils");
+import { file } from "../lib/file.js";
+import { folder } from "../lib/folder.js";
+import { utils } from "../lib/utils.js";
 
 async function  servicesSection() {
     function isValid(service) { // atfiltruoti tik validzias ir aktyvias paslaugas, t.y. ju objektus
@@ -25,9 +25,7 @@ async function  servicesSection() {
     }
 
     let servicesHTML = '';
-     //perskaitome kokie failai yra: /data/services
     const filesList = await folder.read('data/services');
-    //gauname sarasa paslaugu JSON failu
     for (const fileName of filesList) {
         if (utils.fileExtension(fileName) !== 'json') {
             continue;
@@ -57,4 +55,4 @@ async function  servicesSection() {
     </section>`;
 }
 
-module.exports = servicesSection;
+export { servicesSection };
