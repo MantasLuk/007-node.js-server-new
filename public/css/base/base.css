@@ -36,3 +36,11 @@ body {
 img {
     width: 100%;
 }
+
+footer {
+    background-color: #eee;
+}
+
+.form-errors {
+    color: red;
+}
