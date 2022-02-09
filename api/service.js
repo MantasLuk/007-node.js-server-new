@@ -9,7 +9,7 @@ handler.service = (data, callback) => {
 
     return callback(404, {
         status: 'error',
-        msg: 'Tavo norimas HTTPmethod yra nepalaikomas'
+        msg: 'This HTTPmethod is not supported'
     });
 }
 
@@ -19,7 +19,7 @@ handler._service.get = (data, callback) => {
     // gaunam
     return callback(200, {
         status: 'success',
-        msg: 'Paslaugos info'
+        msg: 'Service info'
     });
 }
 
@@ -27,7 +27,7 @@ handler._service.post = (data, callback) => {
     // sukuriam
     return callback(200, {
         status: 'success',
-        msg: 'Paslauga sukurta'
+        msg: 'Service is created'
     });
 }
 
@@ -35,7 +35,7 @@ handler._service.put = (data, callback) => {
     // atnaujinam
     return callback(200, {
         status: 'success',
-        msg: 'Paslauga atnaujinta'
+        msg: 'Service is updated'
     });
 }
 
@@ -43,7 +43,7 @@ handler._service.delete = (data, callback) => {
     // istrinam
     return callback(200, {
         status: 'success',
-        msg: 'Paslauga istrinta'
+        msg: 'Service is deleted'
     });
 }
 
