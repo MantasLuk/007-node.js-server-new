@@ -45,7 +45,7 @@ class IsValid {
             }
         }
         return true;
-    }
+    };
 
     static email(text){
         if(typeof text !== 'string'){
@@ -78,7 +78,6 @@ class IsValid {
         return true;
     };
     
-    
     static password(text){
         const minPasswordLength = 12;
 
@@ -98,7 +97,7 @@ class IsValid {
             return 'Password should contain at least one special symbol'
         }
         return true;
-    }
+    };
 };
 
 export { IsValid };

@@ -1,10 +1,14 @@
+import { IsValid } from "../lib/IsValid.js";
+import { file } from "../lib/file.js";
+
+
 const handler = {};
 
-handler.account = (data, callback) => {
+handler.account = async (data, callback) => {
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
-        return handler.account[data.httpMethod](data, callback);
+        return await handler.account[data.httpMethod](data, callback);
     }
 
     return callback(404, {
@@ -23,13 +27,62 @@ handler.account.get = (data, callback) => {
     });
 }
 
-handler.account.post = (data, callback) => {
-    // sukuriam
+handler.account.post = async (data, callback) => {
+    const userObj = data.payload;
+
+    if(!userObj) {
+        return callback(400, {
+            status: 'error',
+            msg: 'JSON obj is not valid'
+        });
+    }
+    console.log(userObj);
+    const [usernameError, usernameMsg] = IsValid.username(userObj.username);
+    if(usernameError) {
+        return callback(400, {
+            status: 'error',
+            msg: usernameMsg
+        });
+    }
+    const [emailError, emailMsg] = IsValid.email(userObj.email);
+    if(emailError) {
+        return callback(400, {
+            status: 'error',
+            msg: emailMsg
+        });
+    }
+    const [passwordError, passwordMsg] = IsValid.password(userObj.password);
+    if(passwordError) {
+        return callback(400, {
+            status: 'error',
+            msg: passwordMsg
+        });
+    }
+
+    // sukuriam vartotoja:
+    // sukuriamas failas: /data/users/[email].json
+
+    const  creationStatus =  await file.create('/data/users', userObj.email + '.json', userObj);
+    if(creationStatus !== true) {
+        return callback(500, {
+            status: 'error',
+            msg: creationStatus
+        });
+    }
+
     return callback(200, {
         status: 'success',
         msg: 'account is created'
     });
 }
+
+
+
+
+
+
+
+
 
 handler.account.put = (data, callback) => {
     // atnaujinam
