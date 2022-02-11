@@ -6,6 +6,7 @@ environments.dev = {
     httpPort: 3001,
     defaultLang: 'en',
     password: 'demo-password',
+    hashingSecret: '2323htbgogbsdbnp54sdc32'
 }
 
 environments.production = {
@@ -14,6 +15,7 @@ environments.production = {
     httpPort: 4000,
     defaultLang: 'lt',
     password: 'fretr48t521e4rteye52',
+    hashingSecret: 'ghfghfg87g7v908v700dghtgh906'
 }
 
 environments.test = {
@@ -22,6 +24,7 @@ environments.test = {
     httpPort: 5000,
     defaultLang: 'ee',
     password: 'esttoo',
+    hashingSecret: 'ytytgoidfbpo455fjvj384dfk'
 }
 
 // NODE_ENV=production node . -> environments.production
