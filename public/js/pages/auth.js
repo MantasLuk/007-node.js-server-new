@@ -48,13 +48,35 @@ submitDOM.addEventListener('click', (e) => {
         }
     }
 
+    const formData = {
+        username: allInputsDOM[0].value,
+        email: allInputsDOM[1].value,
+        password: allInputsDOM[2].value,
+    }
+
+
     //jeigu rado klaidu, jas atvaizduoja
     if(errors.length) {
         console.log('Correct errors, please....');
         errorsDOM.innerText = errors.join('\n');
     } else {
-        console.log('Good to GO!');
         errorsDOM.innerText = '';
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4) {
+
+                try {
+                    const obj = JSON.parse(this.responseText)
+                    errorsDOM.innerHTML = obj.msg;
+                    
+                } catch (error) {
+                    errorsDOM.innerHTML = 'Bad message from server'
+                }
+            }
+        };
+        xhttp.open("POST", "/api/account", true);
+        xhttp.send(JSON.stringify(formData));
     }
 
     //siusti duomenis

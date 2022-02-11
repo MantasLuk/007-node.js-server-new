@@ -79,12 +79,6 @@ handler.account.post = async (data, callback) => {
 
 
 
-
-
-
-
-
-
 handler.account.put = (data, callback) => {
     // atnaujinam
     return callback(200, {
