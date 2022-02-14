@@ -5,11 +5,11 @@ import { utils } from "../lib/utils.js";
 
 const handler = {};
 
-handler.account = async (data, callback) => {
+handler.token = async (data, callback) => {
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
-        return await handler.account[data.httpMethod](data, callback);
+        return await handler.token[data.httpMethod](data, callback);
     }
 
     return callback(404, {
@@ -18,19 +18,19 @@ handler.account = async (data, callback) => {
     });
 }
 
-handler._account = {};
+handler._token = {};
 
-handler.account.get = (data, callback) => {
+handler.token.get = (data, callback) => {
     // gaunam
     return callback(200, {
         status: 'success',
-        msg: 'account info'
+        msg: 'session info'
     });
 }
 
 //--------------------------------------------------------------
 
-handler.account.post = async (data, callback) => {
+handler.token.post = async (data, callback) => {
     const userObj = data.payload;
 
     if(!userObj) {
@@ -39,14 +39,7 @@ handler.account.post = async (data, callback) => {
             msg: 'JSON obj is not valid'
         });
     }
-    console.log(userObj);
-    const [usernameError, usernameMsg] = IsValid.username(userObj.username);
-    if(usernameError) {
-        return callback(400, {
-            status: 'error',
-            msg: usernameMsg
-        });
-    }
+    
     const [emailError, emailMsg] = IsValid.email(userObj.email);
     if(emailError) {
         return callback(400, {
@@ -62,21 +55,11 @@ handler.account.post = async (data, callback) => {
         });
     }
 
-    // sukuriam vartotoja:
+    // sukuriam sesija:
     // sukuriamas failas: /data/users/[email].json
     userObj.pass = utils.hash(userObj.pass);
 
-    // patikrinti ar vartotojas dar nera uzregistruotas
-    const alreadyRegistered = false;
-    if(alreadyRegistered) {
-        return callback(400, {
-            status: 'error',
-            msg: 'Account with this email is already taken'
-        });
-    }
-
-    // jei nera tada registruoti:
-    const  creationStatus =  await file.create('/data/users', userObj.email + '.json', userObj);
+    const  creationStatus =  await file.create('/data/tokens', userObj.email + '.json', userObj);
     if(creationStatus !== true) {
         return callback(500, {
             status: 'error',
@@ -86,27 +69,27 @@ handler.account.post = async (data, callback) => {
 
     return callback(200, {
         status: 'success',
-        msg: 'account is created'
+        msg: 'session is created'
     });
 }
 
 //---------------------------------------------------------------
 
-handler.account.put = (data, callback) => {
+handler.token.put = (data, callback) => {
     // atnaujinam
     return callback(200, {
         status: 'success',
-        msg: 'account is updated'
+        msg: 'session is updated'
     });
 }
 
 //-----------------------------------------------------------------
 
-handler.account.delete = (data, callback) => {
+handler.token.delete = (data, callback) => {
     // istrinam
     return callback(200, {
         status: 'success',
-        msg: 'account is deleted'
+        msg: 'session is deleted'
     });
 }
 
