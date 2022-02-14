@@ -47,6 +47,7 @@ handler.account.post = async (data, callback) => {
             msg: usernameMsg
         });
     }
+
     const [emailError, emailMsg] = IsValid.email(userObj.email);
     if(emailError) {
         return callback(400, {
@@ -54,6 +55,7 @@ handler.account.post = async (data, callback) => {
             msg: emailMsg
         });
     }
+
     const [passwordError, passwordMsg] = IsValid.password(userObj.pass);
     if(passwordError) {
         return callback(400, {
@@ -75,8 +77,15 @@ handler.account.post = async (data, callback) => {
         });
     }
 
+    const userData = {
+        username: userObj.username,
+        email: userObj.email,
+        password: userObj.pass,
+    }
+
+
     // jei nera tada registruoti:
-    const  creationStatus =  await file.create('/data/users', userObj.email + '.json', userObj);
+    const  creationStatus =  await file.create('/data/users', userObj.email + '.json', userData);
     if(creationStatus !== true) {
         return callback(500, {
             status: 'error',
