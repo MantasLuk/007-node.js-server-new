@@ -39,7 +39,7 @@ handler.account.post = async (data, callback) => {
             msg: 'JSON obj is not valid'
         });
     }
-    console.log(userObj);
+    
     const [usernameError, usernameMsg] = IsValid.username(userObj.username);
     if(usernameError) {
         return callback(400, {
