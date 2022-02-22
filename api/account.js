@@ -1,7 +1,6 @@
-import { IsValid } from "../lib/IsValid.js";
 import { file } from "../lib/file.js";
+import { IsValid } from "../lib/IsValid.js";
 import { utils } from "../lib/utils.js";
-
 
 const handler = {};
 
@@ -9,39 +8,29 @@ handler.account = async (data, callback) => {
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
-        return await handler.account[data.httpMethod](data, callback);
+        return await handler._account[data.httpMethod](data, callback);
     }
 
     return callback(404, {
         status: 'error',
-        msg: 'This HTTPmethod is not supported'
+        msg: 'Tavo norimas HTTPmethod yra nepalaikomas'
     });
 }
 
 handler._account = {};
 
-handler.account.get = (data, callback) => {
-    // gaunam
-    return callback(200, {
-        status: 'success',
-        msg: 'account info'
-    });
-}
-
-//--------------------------------------------------------------
-
-handler.account.post = async (data, callback) => {
+handler._account.post = async (data, callback) => {
     const userObj = data.payload;
 
-    if(!userObj) {
+    if (!userObj) {
         return callback(400, {
             status: 'error',
-            msg: 'JSON obj is not valid'
+            msg: 'Nevalidus JSON objektas'
         });
     }
-    
+
     const [usernameError, usernameMsg] = IsValid.username(userObj.username);
-    if(usernameError) {
+    if (usernameError) {
         return callback(400, {
             status: 'error',
             msg: usernameMsg
@@ -49,7 +38,7 @@ handler.account.post = async (data, callback) => {
     }
 
     const [emailError, emailMsg] = IsValid.email(userObj.email);
-    if(emailError) {
+    if (emailError) {
         return callback(400, {
             status: 'error',
             msg: emailMsg
@@ -57,23 +46,20 @@ handler.account.post = async (data, callback) => {
     }
 
     const [passwordError, passwordMsg] = IsValid.password(userObj.pass);
-    if(passwordError) {
+    if (passwordError) {
         return callback(400, {
             status: 'error',
             msg: passwordMsg
         });
     }
 
-    // sukuriam vartotoja:
-    // sukuriamas failas: /data/users/[email].json
     userObj.pass = utils.hash(userObj.pass);
 
-    // patikrinti ar vartotojas dar nera uzregistruotas
     const alreadyRegistered = false;
-    if(alreadyRegistered) {
+    if (alreadyRegistered) {
         return callback(400, {
             status: 'error',
-            msg: 'Account with this email is already taken'
+            msg: 'Paskyra su tokiu el. pastu jau uzregistruota'
         });
     }
 
@@ -83,10 +69,8 @@ handler.account.post = async (data, callback) => {
         password: userObj.pass,
     }
 
-
-    // jei nera tada registruoti:
-    const  creationStatus =  await file.create('/data/users', userObj.email + '.json', userData);
-    if(creationStatus !== true) {
+    const creationStatus = await file.create('/data/users', userObj.email + '.json', userData);
+    if (creationStatus !== true) {
         return callback(500, {
             status: 'error',
             msg: creationStatus
@@ -95,27 +79,35 @@ handler.account.post = async (data, callback) => {
 
     return callback(200, {
         status: 'success',
-        msg: 'account is created'
+        msg: 'Paskyra sukurta',
+        action: {
+            name: 'redirect',
+            param: '/login'
+        }
     });
 }
 
-//---------------------------------------------------------------
+handler._account.get = (data, callback) => {
+    // gaunam
+    return callback(200, {
+        status: 'success',
+        msg: 'Paskyros info'
+    });
+}
 
-handler.account.put = (data, callback) => {
+handler._account.put = (data, callback) => {
     // atnaujinam
     return callback(200, {
         status: 'success',
-        msg: 'account is updated'
+        msg: 'Paskyra atnaujinta'
     });
 }
 
-//-----------------------------------------------------------------
-
-handler.account.delete = (data, callback) => {
+handler._account.delete = (data, callback) => {
     // istrinam
     return callback(200, {
         status: 'success',
-        msg: 'account is deleted'
+        msg: 'Paskyra istrinta'
     });
 }
 

@@ -1,7 +1,6 @@
-import { IsValid } from "../lib/IsValid.js";
 import { file } from "../lib/file.js";
+import { IsValid } from "../lib/IsValid.js";
 import { utils } from "../lib/utils.js";
-
 
 const handler = {};
 
@@ -9,85 +8,76 @@ handler.token = async (data, callback) => {
     const acceptableMethods = ['get', 'post', 'put', 'delete'];
 
     if (acceptableMethods.includes(data.httpMethod)) {
-        return await handler.token[data.httpMethod](data, callback);
+        return await handler._token[data.httpMethod](data, callback);
     }
 
     return callback(404, {
         status: 'error',
-        msg: 'This HTTPmethod is not supported'
+        msg: 'Tavo norimas HTTPmethod yra nepalaikomas'
     });
 }
 
 handler._token = {};
 
-handler.token.get = (data, callback) => {
-    // gaunam
-    return callback(200, {
-        status: 'success',
-        msg: 'session info'
-    });
-}
-
-//--------------------------------------------------------------
-
-handler.token.post = async (data, callback) => {
+handler._token.post = async (data, callback) => {
     const userObj = data.payload;
 
-    if(!userObj) {
+    if (!userObj) {
         return callback(400, {
             status: 'error',
-            msg: 'JSON obj is not valid'
+            msg: 'Nevalidus JSON objektas'
         });
     }
-    
+
     const [emailError, emailMsg] = IsValid.email(userObj.email);
-    if(emailError) {
+    if (emailError) {
         return callback(400, {
             status: 'error',
             msg: emailMsg
         });
     }
+
     const [passwordError, passwordMsg] = IsValid.password(userObj.pass);
-    if(passwordError) {
+    if (passwordError) {
         return callback(400, {
             status: 'error',
             msg: passwordMsg
         });
     }
 
-    const savedUserDataJSON = await file.read('/data/users', userObj.email + '.json')
+    const savedUserDataJSON = await file.read('/data/users', userObj.email + '.json');
     if (!savedUserDataJSON) {
         return callback(400, {
             status: 'error',
-            msg: 'Invalid email and password match'
+            msg: 'Invalid email and password match 1'
         });
     }
 
-    const savedUserData = utils.parseJSONtoObject(savedUserDataJSON)
+    const savedUserData = utils.parseJSONtoObject(savedUserDataJSON);
     if (!savedUserData) {
         return callback(500, {
             status: 'error',
-            msg: 'Internal server error while trying to ger user info'
+            msg: 'Internat server error while trying to get user information'
         });
     }
 
     userObj.pass = utils.hash(userObj.pass);
-    if (userObj.pass !== savedUserData.pass) {
+    if (userObj.pass !== savedUserData.password) {
         return callback(400, {
             status: 'error',
-            msg: 'Invalid email and password match'
+            msg: 'Invalid email and password match 2'
         });
     }
 
     const userData = {
         email: userObj.email,
-        expire: Date.now() + 7 * 86400000 //galioja 7 dienas
+        expire: Date.now() + 7 * 86400000
     }
 
-    const token = utils.randomString(20)
+    const token = utils.randomString(20);
 
-    const  creationStatus =  await file.create('/data/tokens', token + '.json', userData);
-    if(creationStatus !== true) {
+    const creationStatus = await file.create('/data/tokens', token + '.json', userData);
+    if (creationStatus !== true) {
         return callback(500, {
             status: 'error',
             msg: creationStatus
@@ -107,29 +97,37 @@ handler.token.post = async (data, callback) => {
 
     return callback(200, {
         status: 'success',
-        msg: 'Sesija sukurta'
+        msg: 'Sesija sukurta',
+        action: {
+            name: 'redirect',
+            param: '/'
+        }
     }, {
         'Set-Cookie': cookies.join('; '),
     });
 }
 
-//---------------------------------------------------------------
-
-handler.token.put = (data, callback) => {
-    // atnaujinam
+handler._token.get = (data, callback) => {
+    // gaunam
     return callback(200, {
         status: 'success',
-        msg: 'session is updated'
+        msg: 'Sesijos info'
     });
 }
 
-//-----------------------------------------------------------------
+handler._token.put = (data, callback) => {
+    // atnaujinam
+    return callback(200, {
+        status: 'success',
+        msg: 'Sesija atnaujinta'
+    });
+}
 
-handler.token.delete = (data, callback) => {
+handler._token.delete = (data, callback) => {
     // istrinam
     return callback(200, {
         status: 'success',
-        msg: 'session is deleted'
+        msg: 'Sesija istrinta'
     });
 }
 

@@ -1,5 +1,4 @@
-//const server = require('./lib/server.js');
-import { server } from './lib/server.js'
+import { server } from './lib/server.js';
 
 const app = {};
 
@@ -14,7 +13,7 @@ app.init = () => {
     server.init();
 
     // reguliariu procesu paleidimas:
-    // - istrinti senus/nebreikalingus failus
+    // - istrinti senus/nebereikalingus failus
     // - atsinaujinti informacija per/is API (valiutu kursai)
 }
 

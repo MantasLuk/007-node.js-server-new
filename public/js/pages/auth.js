@@ -1,12 +1,9 @@
 import { IsValid } from "../components/IsValid.js";
 
-console.log('hello, from auth pages');
-
 const formDOM = document.querySelector('.form');
-const errorsDOM =formDOM.querySelector('.form-errors');
+const errorsDOM = formDOM.querySelector('.form-errors');
 const allInputsDOM = formDOM.querySelectorAll('input');
 const submitDOM = formDOM.querySelector('button');
-
 
 submitDOM.addEventListener('click', (e) => {
     e.preventDefault();
@@ -65,6 +62,13 @@ submitDOM.addEventListener('click', (e) => {
                 try {
                     const obj = JSON.parse(this.responseText);
                     errorsDOM.innerText = obj.msg;
+
+                    if (obj.action) {
+                        const { name, param } = obj.action;
+                        if (name === 'redirect') {
+                            location.href = param;
+                        }
+                    }
                 } catch (error) {
                     errorsDOM.innerText = 'Is serverio atejo blogai suformatuota zinute';
                 }
@@ -74,9 +78,9 @@ submitDOM.addEventListener('click', (e) => {
         xhttp.send(JSON.stringify(formData));
     }
 
-    //siusti duomenis
-});
+    // siusti duomenis
 
+})
 
 
 

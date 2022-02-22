@@ -9,25 +9,25 @@ handler.contact = (data, callback) => {
 
     return callback(404, {
         status: 'error',
-        msg: 'This HTTPmethod is not supported'
+        msg: 'Tavo norimas HTTPmethod yra nepalaikomas'
     });
 }
 
 handler._contact = {};
 
-handler._contact.get = (data, callback) => {
-    // gaunam
-    return callback(200, {
-        status: 'success',
-        msg: 'contact info'
-    });
-}
-
 handler._contact.post = (data, callback) => {
     // sukuriam
     return callback(200, {
         status: 'success',
-        msg: 'contact is created'
+        msg: 'Zinute sukurta'
+    });
+}
+
+handler._contact.get = (data, callback) => {
+    // gaunam
+    return callback(200, {
+        status: 'success',
+        msg: 'Zinutes info'
     });
 }
 
@@ -35,7 +35,7 @@ handler._contact.delete = (data, callback) => {
     // istrinam
     return callback(200, {
         status: 'success',
-        msg: 'contact is deleted'
+        msg: 'Zinute istrinta'
     });
 }
 

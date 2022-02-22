@@ -5,8 +5,14 @@ environments.dev = {
     envName: 'dev',
     httpPort: 3001,
     defaultLang: 'en',
+    cacheEnabled: false,
+    cacheTime: {
+        default: 10,
+        css: 100,
+        js: 100,
+    },
     password: 'demo-password',
-    hashingSecret: '2323htbgogbsdbnp54sdc32'
+    hashingSecret: '847jh5ge2r54yj152ty8y4',
 }
 
 environments.production = {
@@ -14,8 +20,14 @@ environments.production = {
     envName: 'production',
     httpPort: 4000,
     defaultLang: 'lt',
+    cacheEnabled: true,
+    cacheTime: {
+        default: 86400,
+        css: 86400,
+        js: 86400,
+    },
     password: 'fretr48t521e4rteye52',
-    hashingSecret: 'ghfghfg87g7v908v700dghtgh906'
+    hashingSecret: '5r4ku1y52h4115847ry15284f',
 }
 
 environments.test = {
@@ -23,8 +35,14 @@ environments.test = {
     envName: 'test',
     httpPort: 5000,
     defaultLang: 'ee',
+    cacheEnabled: false,
+    cacheTime: {
+        default: 300,
+        css: 300,
+        js: 300,
+    },
     password: 'esttoo',
-    hashingSecret: 'ytytgoidfbpo455fjvj384dfk'
+    hashingSecret: 'u4k1hg5284yjFh51847ey15gy',
 }
 
 // NODE_ENV=production node . -> environments.production
