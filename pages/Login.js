@@ -1,6 +1,11 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageLogin extends PageTemplate {
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
     constructor(data) {
         super(data);
         this.pageCSSfileName = 'auth';
@@ -20,7 +25,7 @@ class PageLogin extends PageTemplate {
                                 </div>
                                 <div class="form-row">
                                     <label for="pass">Password</label>
-                                    <input id="pass" data-validation="password" type="password" placeholder="Type password" value="Chuckchuckchuck2!" required>
+                                    <input id="pass" data-validation="password" type="password" placeholder="Type password" value="chuckchuckchuck2" required>
                                 </div>
                                 <div class="form-row">
                                     <button type="submit" class="btn">Log in</button>

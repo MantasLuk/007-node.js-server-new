@@ -1,103 +1,82 @@
-
 class IsValid {
-    static username(text){
-            const minUserNameLength = 4;
-            const maxUserNameLength = 20;
+    static username(text) {
+        const minUsernameLength = 4;
+        const maxUsernameLength = 20;
 
-        if(typeof text !== "string") {
-            return 'Username type is wrong';
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
         }
+        text = text.trim();
 
-            text = text.trim();
-
-        if(text === '') {
-            return 'Forgot to type username';
+        if (text === '') {
+            return 'Pamirsai irasyti slapyvardi';
         }
-        if(text.length < minUserNameLength ) {
-            return 'Username is too short';
+        if (text.length < minUsernameLength) {
+            return 'Per trumpas slapyvardis';
         }
-        if(text.length > maxUserNameLength ) {
-            return 'Username is too long';
+        if (text.length > maxUsernameLength) {
+            return 'Per ilgas slapyvardis';
         }
-        if(text.slice(-1) === '.'){
-            return 'dot (.) symbol can not be last'
-        }
-        if(text.slice(-1) === '_'){
-            return '_ symbol can not be last'
-        }
-        if(text.indexOf('_') == 0){
-            return '_ symbol can not be first'
-        }
-        if(text.indexOf('.') == 0){
-            return 'dot (.) symbol can not be first'
-        }
-        if(text.split('__').length -1 == true){
-            return 'more than one _ symbol in a row'
-        }
-        if(text.split('..').length -1 == true){
-            return 'more than one . symbol in a row'
-        }
-        //leistini simboliai: a-z 0-9 _ .
-        const allowedSymbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.';
-        for(const t of text) {
-            if(!allowedSymbols.includes(t)) {
-                return `Username can not contain this symbol (${t})`; // 
+        const allowedSymbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
+        for (const t of text) {
+            if (!allowedSymbols.includes(t)) {
+                return `Slapyvardyje yra neleistinas simbolis (${t})`;
             }
         }
         return true;
-    };
+    }
 
-    static email(text){
-        if(typeof text !== 'string'){
-            return 'Wrong type of email'
-        }
-        if(text === ''){
-            return 'Forgot to type email'
-        }
-        if(!text.includes('@')){
-            return 'There is no @ symbol'
-        }
-        if(text.indexOf('@') == 0){
-            return '@ symbol can not be first'
-        }
-        if(text.split('@').length -1 >= 2){
-            return 'more than one @ symbol'
-        }
-        if(text.split(' ').length -1 > 0){
-            return 'There is a gap in the text'
-        } 
-        if(text.slice(-1) === '.'){
-            return 'dot (.) symbol can not be last'
-        }
-        if(text.indexOf('.') == 0){
-            return 'dot (.) symbol can not be first'
-        }
-        if(text.split('..').length -1 == true){
-            return 'more than one . symbol in a row'
+    static email(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
         }
         return true;
-    };
-    
-    static password(text){
+    }
+
+    static password(text) {
         const minPasswordLength = 12;
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
 
-        if(text === ''){
-            return 'Forgot to type password'
+        if (text === '') {
+            return 'Pamirsai irasyti slaptazodi';
         }
-        if(text.length < minPasswordLength){
-            return 'Password is too short'
-        }
-        if(text.split(/[A-Z]/).length <= 1) {
-            return 'Password should contain at least one capital letter'
-        }
-        if(text.split(/[0-9]/).length <= 1) {
-            return 'Password should contain at least one number'
-        }
-        if(text.split(/(?=.*[!@#$%^&*?<>_'":;`[])/).length <= 1) {
-            return 'Password should contain at least one special symbol'
+        if (text.length < minPasswordLength) {
+            return 'Per trumpas slaptazodis';
         }
         return true;
-    };
-};
+    }
 
-export { IsValid };
+    static title(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
+        if (text === '') {
+            return 'Pavadinimas negali buti tuscias';
+        }
+        return true;
+    }
+
+    static slug(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
+        if (text === '') {
+            return 'URL negali buti tuscias';
+        }
+        return true;
+    }
+
+    static content(text) {
+        if (typeof text !== 'string') {
+            return 'Netinkamo tipo reiksme';
+        }
+        if (text === '') {
+            return 'Turinys negali buti tuscias';
+        }
+        return true;
+    }
+}
+
+export { IsValid }

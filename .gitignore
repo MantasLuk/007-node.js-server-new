@@ -5,4 +5,5 @@ package-lock.json
 /coverage
 /data/users/*.json
 /data/tokens/*.json
+/data/blog-posts/*.json
 /zzzz.js

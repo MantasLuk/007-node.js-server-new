@@ -1,6 +1,11 @@
 import { PageTemplate } from "../lib/Page.js";
 
 class PageLogout extends PageTemplate {
+    /**
+     * Sabloninio puslapio konstruktorius.
+     * @constructor
+     * @param {object} data Duomenu objektas
+     */
     constructor(data) {
         super(data);
         this.isLogoutPage = true;
@@ -12,7 +17,7 @@ class PageLogout extends PageTemplate {
                     <div class="row">
                         <div class="left">
                             <h1>Logout</h1>
-                            <p>You have been succesfully logged out</p>
+                            <p>You have been successfully logged out</p>
                             <a href="/" class="btn">Go back home</a>
                         </div>
                         <div class="right">
@@ -24,4 +29,3 @@ class PageLogout extends PageTemplate {
 }
 
 export { PageLogout };
-

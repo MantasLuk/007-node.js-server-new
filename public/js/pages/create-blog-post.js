@@ -2,14 +2,13 @@ import { IsValid } from "../components/IsValid.js";
 
 const formDOM = document.querySelector('.form');
 const errorsDOM = formDOM.querySelector('.form-errors');
-const allInputsDOM = formDOM.querySelectorAll('input');
+const allInputsDOM = formDOM.querySelectorAll('input, textarea');
 const submitDOM = formDOM.querySelector('button');
 
 submitDOM.addEventListener('click', (e) => {
     e.preventDefault();
     // formos validacija - pirmine reiksmiu patikra
     const errors = [];
-    const passwordValues = [];
     const formData = {}
     for (const inputDOM of allInputsDOM) {
         const { id, value, dataset } = inputDOM;
@@ -32,21 +31,6 @@ submitDOM.addEventListener('click', (e) => {
 
         if (valueState !== true && !errors.includes(valueState)) {
             errors.push(valueState);
-        }
-
-        if (validationRule === 'password') {
-            passwordValues.push(value);
-        }
-    }
-
-    // jei formoje yra daugiau nei 1 password'as, tai patikrinti, jog visi vienodi
-    if (passwordValues.length > 1) {
-        const initialPassword = passwordValues[0];
-        for (let i = 1; i < passwordValues.length; i++) {
-            if (initialPassword !== passwordValues[i]) {
-                errors.push('Slaptazodziai nesutampa');
-                break;
-            }
         }
     }
 
